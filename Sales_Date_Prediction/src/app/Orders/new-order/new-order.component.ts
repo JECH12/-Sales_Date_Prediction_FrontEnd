@@ -122,7 +122,6 @@ export class NewOrderComponent {
       orderDetail : orderDetail
     };
     
-    console.log(newOrder);
     this.orderService.createOrder(newOrder).subscribe({
       next: (response) => {
         if (response.statusCode == 200) 
