@@ -1,0 +1,13 @@
+.prediction-container {
+  padding: 1rem;
+}
+
+.filter {
+  width: 300px;
+  margin-bottom: 1rem;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}

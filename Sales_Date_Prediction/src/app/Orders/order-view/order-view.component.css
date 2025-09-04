@@ -1,0 +1,20 @@
+.orders-container {
+  padding: 16px;
+  margin: 16px;
+}
+
+mat-spinner {
+  display: block;
+  margin: 24px auto;
+}
+
+table {
+  width: 100%;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  margin: 16px 0;
+}

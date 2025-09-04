@@ -1,0 +1,95 @@
+<h2 mat-dialog-title class="bg-green-700 text-white p-3">
+  Customer AHCPOP - New Order
+</h2>
+
+<div mat-dialog-content [formGroup]="orderForm" class="p-4">
+  <section>
+    <h3 class="text-lg font-semibold mb-2">Order</h3>
+    @if (error()) {
+        <p class="error" style="color: red;">{{ error() }}</p>
+    }
+    <div class="flex gap-2">
+      <mat-form-field appearance="outline" class="w-1/2">
+        <mat-label>Employee</mat-label>
+        <mat-select formControlName="employeeId">
+          @for (emp of employees().data; track emp.empId) {
+            <mat-option [value]="emp.empId">{{ emp.fullName }}</mat-option>
+          }
+        </mat-select>
+        @if (orderForm.get('employeeId')?.invalid && orderForm.get('employeeId')?.touched) {
+          <mat-error>Required</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-1/2">
+        <mat-label>Shipper</mat-label>
+        <mat-select formControlName="shipperId">
+          @for (s of shippers().data; track s.shipperId) {
+            <mat-option [value]="s.shipperId">{{ s.companyName }}</mat-option>
+          }
+        </mat-select>
+        @if (orderForm.get('shipperId')?.invalid && orderForm.get('shipperId')?.touched) {
+          <mat-error>Required</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Ship Name</mat-label>
+      <input matInput formControlName="shipName" />
+    </mat-form-field>
+
+    <div class="flex gap-2">
+      <mat-form-field appearance="outline" class="w-1/3">
+        <mat-label>Ship Address</mat-label>
+        <input matInput formControlName="shipAddress" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-1/3">
+        <mat-label>Ship City</mat-label>
+        <input matInput formControlName="shipCity" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-1/3">
+        <mat-label>Ship Country</mat-label>
+        <input matInput formControlName="shipCountry" />
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Freight</mat-label>
+      <input type="number" matInput formControlName="freight" />
+    </mat-form-field>
+  </section>
+
+  <section>
+    <h3 class="text-lg font-semibold mb-2">Order Details</h3>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Product</mat-label>
+      <mat-select formControlName="productId" (selectionChange)="onProductSelected($event.value)">
+        @for (p of products().data; track p.productId) {
+          <mat-option [value]="p.productId">{{ p.productName }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    @if (selectedProduct()) {
+        <p class="text-sm mt-2">
+        <strong>Precio del producto: </strong> {{ selectedProduct()?.unitPrice | currency }}
+        </p>
+    }
+    <div class="flex gap-2">
+      <mat-form-field appearance="outline" class="w-1/3">
+        <mat-label>Quantity</mat-label>
+        <input type="number" matInput formControlName="quantity" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="w-1/3">
+        <mat-label>Discount</mat-label>
+        <input type="number" matInput formControlName="discount" />
+      </mat-form-field>
+    </div>
+  </section>
+</div>
+
+<div mat-dialog-actions align="end" class="p-3">
+  <button mat-button (click)="close()">CLOSE</button>
+  <button mat-raised-button color="primary" (click)="save()" [disabled]="loading()">SAVE</button>
+</div>
